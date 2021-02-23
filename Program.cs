@@ -88,42 +88,131 @@ namespace Lista_Circulares
             }
         }
 
-         public void BuscarNodo() // metodo buscar
+        public void BuscarNodo() // metodo buscar
     
         {
 
+            Nodo actual = new Nodo();
+            actual = primero;
+            bool encontrado = false;
+            Console.Write(" Ingrese el valor del Nodo a buscar: ");
+            int nodoBuscado = int.Parse(Console.ReadLine());
+            if (actual != null)
+            {
+                do
+                {
+                    if(actual.dato == nodoBuscado)
+                    {
+                        Console.WriteLine("\n Nodo con el dato ({0}) encontrado\n ", actual.dato);
+                        encontrado = true;
+
+                    }
+                    actual = actual.siguiente;
+                }
+                while (actual != primero && encontrado != true);
+                if (!encontrado)
+                {
+                    Console.WriteLine("\n Nodo no encontrado\n");
+                }
+
+            
+            }
+            else
+            {
+                Console.WriteLine("\n La lista se encuentra vacia");
+            }
+        
+        }
+
+        public void ModificarNodo()
+        {
         Nodo actual = new Nodo();
         actual = primero;
         bool encontrado = false;
-        Console.Write(" Ingrese el valor del Nodo a buscar: ");
+        Console.Write(" Ingrese el valor del Nodo a modificar: ");
         int nodoBuscado = int.Parse(Console.ReadLine());
         if (actual != null)
         {
             do
             {
-                if(actual.dato == nodoBuscado)
+                if (actual.dato == nodoBuscado)
                 {
-                    Console.WriteLine("\n Nodo con el dato ({0}) encontrado\n ", actual.dato);
+                    Console.WriteLine("\n Nodo con el dato ({0}) encontrado\n", actual.dato);
+                    Console.WriteLine(" Ingrese el nuevo dato para el nodo: ");
+                    actual.dato = int.Parse(Console.ReadLine());
+                    Console.WriteLine("\n Nodo modificaco con exito\n");
                     encontrado = true;
 
                 }
                 actual = actual.siguiente;
-            }
+            } 
             while (actual != primero && encontrado != true);
             if (!encontrado)
             {
                 Console.WriteLine("\n Nodo no encontrado\n");
+            }    
+            
+        }
+        else
+        {
+            Console.WriteLine("\n La lista se encuentra vacia ");
+        }
+    }    
+
+    public void EliminarNodo()
+    {
+        Nodo actual = new Nodo();
+        actual = primero;
+        Nodo anterior = new Nodo();
+        anterior = null;
+        bool encontrado = false;
+        Console.Write(" Ingrese el valor del Nodo a eliminar: ");
+        int nodoBuscado = int.Parse(Console.ReadLine());
+        if (actual != null)
+        {
+            do
+            {
+                if (actual.dato == nodoBuscado)
+                {
+                  
+                    if (actual == primero)
+                    {
+                        primero = primero.siguiente;
+                        ultimo.siguiente = primero;
+
+                    }else if(actual == ultimo)
+                    {
+                        anterior.siguiente = primero;
+                        ultimo = anterior;
+
+                    }
+                    else
+                    {
+                        anterior.siguiente = actual.siguiente;
+                    }
+
+                    encontrado = true;
+
+                }
+                anterior = actual;
+                actual = actual.siguiente;
+            } 
+            while (actual != primero && encontrado != true);
+            if (!encontrado)
+            {
+            Console.WriteLine("\n Nodo no encontrado\n");
             }
 
             
         }
-         else
+        else
         {
             Console.WriteLine("\n La lista se encuentra vacia");
         }
-        
     }
     }
+
+
     class Program
     {
         static void Main(string[] args)
@@ -158,16 +247,16 @@ namespace Lista_Circulares
                     break;
                     case 3:
                         Console.WriteLine("\n Modificar un nodo de la lista \n");
-                        //l.modificarNodo();
+                        l.ModificarNodo();
                     break;
 
                     case 4:
                         Console.WriteLine("\n Eliminar un nodo en la lista \n");
-                        //l.eliminarNodo();
+                        l.EliminarNodo();
                     break;
 
                     case 5:
-                        Console.WriteLine("\n Desplegar lista \n");
+                        Console.WriteLine("\n Elementos de la lista \n");
                         l.desplegarlista();
                     break;
                 }
